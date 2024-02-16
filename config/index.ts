@@ -5,7 +5,7 @@ export const API_KEY = 'app-bSCt4MWWgPBFyGD21UkxKYO4'
 export const API_URL = 'http://139.59.65.135/v1'
 
 export const APP_INFO: AppInfo = {
-    title: 'Chat APP',
+    title: 'Princelab',
     description: '',
     copyright: '',
     privacy_policy: '',
