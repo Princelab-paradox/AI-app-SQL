@@ -1,14 +1,14 @@
 'use client'
-import type { FC } from 'react'
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import TemplateVarPanel, { PanelTitle, VarOpBtnGroup } from '../value-panel'
+import type {FC} from 'react'
+import React, {useEffect, useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import TemplateVarPanel, {PanelTitle, VarOpBtnGroup} from '../value-panel'
 import s from './style.module.css'
-import { AppInfoComp, ChatBtn, EditBtn, FootLogo, PromptTemplate } from './massive-component'
-import type { AppInfo, PromptConfig } from '@/types/app'
+import {AppInfoComp, ChatBtn, EditBtn, FootLogo, PromptTemplate} from './massive-component'
+import type {AppInfo, PromptConfig} from '@/types/app'
 import Toast from '@/app/components/base/toast'
 import Select from '@/app/components/base/select'
-import { DEFAULT_VALUE_MAX_LEN } from '@/config'
+import {DEFAULT_VALUE_MAX_LEN} from '@/config'
 
 // regex to match the {{}} and replace it with a span
 const regex = /\{\{([^}]+)\}\}/g
@@ -26,17 +26,17 @@ export type IWelcomeProps = {
 }
 
 const Welcome: FC<IWelcomeProps> = ({
-  conversationName,
-  hasSetInputs,
-  isPublicVersion,
-  siteInfo,
-  promptConfig,
-  onStartChat,
-  canEidtInpus,
-  savedInputs,
-  onInputsChange,
-}) => {
-  const { t } = useTranslation()
+                                      conversationName,
+                                      hasSetInputs,
+                                      isPublicVersion,
+                                      siteInfo,
+                                      promptConfig,
+                                      onStartChat,
+                                      canEidtInpus,
+                                      savedInputs,
+                                      onInputsChange,
+                                    }) => {
+  const {t} = useTranslation()
   const hasVar = promptConfig.prompt_variables.length > 0
   const [isFold, setIsFold] = useState<boolean>(true)
   const [inputs, setInputs] = useState<Record<string, any>>((() => {
@@ -60,8 +60,7 @@ const Welcome: FC<IWelcomeProps> = ({
         })
       }
       setInputs(res)
-    }
-    else {
+    } else {
       setInputs(savedInputs)
     }
   }, [savedInputs])
@@ -75,14 +74,15 @@ const Welcome: FC<IWelcomeProps> = ({
     return res
   })()
 
-  const { notify } = Toast
+  const {notify} = Toast
   const logError = (message: string) => {
-    notify({ type: 'error', message, duration: 3000 })
+    notify({type: 'error', message, duration: 3000})
   }
 
   const renderHeader = () => {
     return (
-      <div className='absolute top-0 left-0 right-0 flex items-center justify-between border-b border-gray-100 mobile:h-12 tablet:h-16 px-8 bg-white'>
+      <div
+        className='absolute top-0 left-0 right-0 flex items-center justify-between border-b border-gray-100 mobile:h-12 tablet:h-16 px-8 bg-white'>
         <div className='text-gray-900'>{conversationName}</div>
       </div>
     )
@@ -92,15 +92,19 @@ const Welcome: FC<IWelcomeProps> = ({
     return (
       <div className='space-y-3'>
         {promptConfig.prompt_variables.map(item => (
-          <div className='tablet:flex items-start mobile:space-y-2 tablet:space-y-0 mobile:text-xs tablet:text-sm' key={item.key}>
-            <label className={`flex-shrink-0 flex items-center tablet:leading-9 mobile:text-gray-700 tablet:text-gray-900 mobile:font-medium pc:font-normal ${s.formLabel}`}>{item.name}</label>
+          <div className='tablet:flex items-start mobile:space-y-2 tablet:space-y-0 mobile:text-xs tablet:text-sm'
+               key={item.key}>
+            <label
+              className={`flex-shrink-0 flex items-center tablet:leading-9 mobile:text-gray-700 tablet:text-gray-900 mobile:font-medium pc:font-normal ${s.formLabel}`}>{item.name}</label>
             {item.type === 'select'
               && (
                 <Select
                   className='w-full'
                   defaultValue={inputs?.[item.key]}
-                  onSelect={(i) => { setInputs({ ...inputs, [item.key]: i.value }) }}
-                  items={(item.options || []).map(i => ({ name: i, value: i }))}
+                  onSelect={(i) => {
+                    setInputs({...inputs, [item.key]: i.value})
+                  }}
+                  items={(item.options || []).map(i => ({name: i, value: i}))}
                   allowSearch={false}
                   bgClassName='bg-gray-50'
                 />
@@ -109,7 +113,9 @@ const Welcome: FC<IWelcomeProps> = ({
               <input
                 placeholder={`${item.name}${!item.required ? `(${t('appDebug.variableTable.optional')})` : ''}`}
                 value={inputs?.[item.key] || ''}
-                onChange={(e) => { setInputs({ ...inputs, [item.key]: e.target.value }) }}
+                onChange={(e) => {
+                  setInputs({...inputs, [item.key]: e.target.value})
+                }}
                 className={'w-full flex-grow py-2 pl-3 pr-3 box-border rounded-lg bg-gray-50'}
                 maxLength={item.max_length || DEFAULT_VALUE_MAX_LEN}
               />
@@ -119,7 +125,9 @@ const Welcome: FC<IWelcomeProps> = ({
                 className="w-full h-[104px] flex-grow py-2 pl-3 pr-3 box-border rounded-lg bg-gray-50"
                 placeholder={`${item.name}${!item.required ? `(${t('appDebug.variableTable.optional')})` : ''}`}
                 value={inputs?.[item.key] || ''}
-                onChange={(e) => { setInputs({ ...inputs, [item.key]: e.target.value }) }}
+                onChange={(e) => {
+                  setInputs({...inputs, [item.key]: e.target.value})
+                }}
               />
             )}
           </div>
@@ -150,7 +158,7 @@ const Welcome: FC<IWelcomeProps> = ({
     if (isPublicVersion) {
       return (
         <div>
-          <AppInfoComp siteInfo={siteInfo} />
+          <AppInfoComp siteInfo={siteInfo}/>
           <TemplateVarPanel
             isFold={false}
             header={
@@ -159,11 +167,11 @@ const Welcome: FC<IWelcomeProps> = ({
                   title={t('app.chat.publicPromptConfigTitle')}
                   className='mb-1'
                 />
-                <PromptTemplate html={highLightPromoptTemplate} />
+                <PromptTemplate html={highLightPromoptTemplate}/>
               </>
             }
           >
-            <ChatBtn onClick={handleChat} />
+            <ChatBtn onClick={handleChat}/>
           </TemplateVarPanel>
         </div>
       )
@@ -173,10 +181,10 @@ const Welcome: FC<IWelcomeProps> = ({
       <TemplateVarPanel
         isFold={false}
         header={
-          <AppInfoComp siteInfo={siteInfo} />
+          <AppInfoComp siteInfo={siteInfo}/>
         }
       >
-        <ChatBtn onClick={handleChat} />
+        <ChatBtn onClick={handleChat}/>
       </TemplateVarPanel>
     )
   }
@@ -186,7 +194,7 @@ const Welcome: FC<IWelcomeProps> = ({
       <TemplateVarPanel
         isFold={false}
         header={
-          <AppInfoComp siteInfo={siteInfo} />
+          <AppInfoComp siteInfo={siteInfo}/>
         }
       >
         {renderInputs()}
@@ -227,7 +235,7 @@ const Welcome: FC<IWelcomeProps> = ({
                 title={t('app.chat.publicPromptConfigTitle')}
                 className='mb-1'
               />
-              <PromptTemplate html={highLightPromoptTemplate} />
+              <PromptTemplate html={highLightPromoptTemplate}/>
             </>
           }
         />
@@ -243,11 +251,12 @@ const Welcome: FC<IWelcomeProps> = ({
               title={t('app.chat.publicPromptConfigTitle')}
               className='mb-1'
             />
-            <PromptTemplate html={highLightPromoptTemplate} />
+            <PromptTemplate html={highLightPromoptTemplate}/>
             {isFold && (
-              <div className='flex items-center justify-between mt-3 border-t border-indigo-100 pt-4 text-xs text-indigo-600'>
+              <div
+                className='flex items-center justify-between mt-3 border-t border-indigo-100 pt-4 text-xs text-indigo-600'>
                 <span className='text-gray-700'>{t('app.chat.configStatusDes')}</span>
-                <EditBtn onClick={() => setIsFold(false)} />
+                <EditBtn onClick={() => setIsFold(false)}/>
               </div>
             )}
           </>
@@ -272,7 +281,7 @@ const Welcome: FC<IWelcomeProps> = ({
               title={!isFold ? t('app.chat.privatePromptConfigTitle') : t('app.chat.configStatusDes')}
             />
             {isFold && (
-              <EditBtn onClick={() => setIsFold(false)} />
+              <EditBtn onClick={() => setIsFold(false)}/>
             )}
           </div>
         }
@@ -333,12 +342,12 @@ const Welcome: FC<IWelcomeProps> = ({
               </div>}
             <a className='flex items-center pr-3 space-x-3' href="https://dify.ai/" target="_blank">
               <span className='uppercase'>{t('app.chat.powerBy')}</span>
-              <FootLogo />
+              <FootLogo/>
             </a>
           </div>
         )}
       </div>
-    </div >
+    </div>
   )
 }
 

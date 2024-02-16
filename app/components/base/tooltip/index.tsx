@@ -1,8 +1,8 @@
 'use client'
 import classNames from 'classnames'
-import type { FC } from 'react'
+import type {FC} from 'react'
 import React from 'react'
-import { Tooltip as ReactTooltip } from 'react-tooltip' // fixed version to 5.8.3 https://github.com/ReactTooltip/react-tooltip/issues/972
+import {Tooltip as ReactTooltip} from 'react-tooltip' // fixed version to 5.8.3 https://github.com/ReactTooltip/react-tooltip/issues/972
 import 'react-tooltip/dist/react-tooltip.css'
 
 type TooltipProps = {
@@ -16,14 +16,14 @@ type TooltipProps = {
 }
 
 const Tooltip: FC<TooltipProps> = ({
-  selector,
-  content,
-  position = 'top',
-  children,
-  htmlContent,
-  className,
-  clickable,
-}) => {
+                                     selector,
+                                     content,
+                                     position = 'top',
+                                     children,
+                                     htmlContent,
+                                     className,
+                                     clickable,
+                                   }) => {
   return (
     <div className='tooltip-container'>
       {React.cloneElement(children as React.ReactElement, {

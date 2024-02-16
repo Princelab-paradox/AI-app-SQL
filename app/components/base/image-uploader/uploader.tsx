@@ -1,11 +1,11 @@
 'use client'
 
-import type { ChangeEvent, FC } from 'react'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { imageUpload } from './utils'
-import type { ImageFile } from '@/types/app'
-import { TransferMethod } from '@/types/app'
+import type {ChangeEvent, FC} from 'react'
+import {useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import {imageUpload} from './utils'
+import type {ImageFile} from '@/types/app'
+import {TransferMethod} from '@/types/app'
 import Toast from '@/app/components/base/toast'
 
 type UploaderProps = {
@@ -16,14 +16,14 @@ type UploaderProps = {
 }
 
 const Uploader: FC<UploaderProps> = ({
-  children,
-  onUpload,
-  limit,
-  disabled,
-}) => {
+                                       children,
+                                       onUpload,
+                                       limit,
+                                       disabled,
+                                     }) => {
   const [hovering, setHovering] = useState(false)
-  const { notify } = Toast
-  const { t } = useTranslation()
+  const {notify} = Toast
+  const {t} = useTranslation()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -32,7 +32,7 @@ const Uploader: FC<UploaderProps> = ({
       return
 
     if (limit && file.size > limit * 1024 * 1024) {
-      notify({ type: 'error', message: t('common.imageUploader.uploadFromComputerLimit', { size: limit }) })
+      notify({type: 'error', message: t('common.imageUploader.uploadFromComputerLimit', {size: limit})})
       return
     }
 
@@ -53,14 +53,14 @@ const Uploader: FC<UploaderProps> = ({
         imageUpload({
           file: imageFile.file,
           onProgressCallback: (progress) => {
-            onUpload({ ...imageFile, progress })
+            onUpload({...imageFile, progress})
           },
           onSuccessCallback: (res) => {
-            onUpload({ ...imageFile, fileId: res.id, progress: 100 })
+            onUpload({...imageFile, fileId: res.id, progress: 100})
           },
           onErrorCallback: () => {
-            notify({ type: 'error', message: t('common.imageUploader.uploadFromComputerUploadError') })
-            onUpload({ ...imageFile, progress: -1 })
+            notify({type: 'error', message: t('common.imageUploader.uploadFromComputerUploadError')})
+            onUpload({...imageFile, progress: -1})
           },
         })
       },
@@ -69,7 +69,7 @@ const Uploader: FC<UploaderProps> = ({
     reader.addEventListener(
       'error',
       () => {
-        notify({ type: 'error', message: t('common.imageUploader.uploadFromComputerReadError') })
+        notify({type: 'error', message: t('common.imageUploader.uploadFromComputerReadError')})
       },
       false,
     )

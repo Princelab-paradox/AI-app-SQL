@@ -5,7 +5,7 @@ import RemarkBreaks from 'remark-breaks'
 import RehypeKatex from 'rehype-katex'
 import RemarkGfm from 'remark-gfm'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { atelierHeathLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import {atelierHeathLight} from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 export function Markdown(props: { content: string }) {
   return (
@@ -16,7 +16,7 @@ export function Markdown(props: { content: string }) {
           RehypeKatex,
         ]}
         components={{
-          code({ node, inline, className, children, ...props }) {
+          code({node, inline, className, children, ...props}) {
             const match = /language-(\w+)/.exec(className || '')
             return (!inline && match)
               ? (

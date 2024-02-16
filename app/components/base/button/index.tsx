@@ -1,4 +1,4 @@
-import type { FC, MouseEventHandler } from 'react'
+import type {FC, MouseEventHandler} from 'react'
 import React from 'react'
 import Spinner from '@/app/components/base/spinner'
 
@@ -12,13 +12,13 @@ export type IButtonProps = {
 }
 
 const Button: FC<IButtonProps> = ({
-  type,
-  disabled,
-  children,
-  className,
-  onClick,
-  loading = false,
-}) => {
+                                    type,
+                                    disabled,
+                                    children,
+                                    className,
+                                    onClick,
+                                    loading = false,
+                                  }) => {
   let style = 'cursor-pointer'
   switch (type) {
     case 'primary':
@@ -36,7 +36,7 @@ const Button: FC<IButtonProps> = ({
     >
       {children}
       {/* Spinner is hidden when loading is false */}
-      <Spinner loading={loading} className='!text-white !h-3 !w-3 !border-2 !ml-1' />
+      <Spinner loading={loading} className='!text-white !h-3 !w-3 !border-2 !ml-1'/>
     </div>
   )
 }

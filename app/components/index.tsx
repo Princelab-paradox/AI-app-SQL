@@ -1,30 +1,37 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 'use client'
-import type { FC } from 'react'
-import React, { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import produce, { setAutoFreeze } from 'immer'
-import { useBoolean, useGetState } from 'ahooks'
+import type {FC} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import produce, {setAutoFreeze} from 'immer'
+import {useBoolean, useGetState} from 'ahooks'
 import useConversation from '@/hooks/use-conversation'
 import Toast from '@/app/components/base/toast'
 import Sidebar from '@/app/components/sidebar'
 import ConfigSence from '@/app/components/config-scence'
 import Header from '@/app/components/header'
-import { fetchAppParams, fetchChatList, fetchConversations, generationConversationName, sendChatMessage, updateFeedback } from '@/service'
-import type { ConversationItem, Feedbacktype, IChatItem, PromptConfig, VisionFile, VisionSettings } from '@/types/app'
-import { Resolution, TransferMethod } from '@/types/app'
+import {
+  fetchAppParams,
+  fetchChatList,
+  fetchConversations,
+  generationConversationName,
+  sendChatMessage,
+  updateFeedback
+} from '@/service'
+import type {ConversationItem, Feedbacktype, IChatItem, PromptConfig, VisionFile, VisionSettings} from '@/types/app'
+import {Resolution, TransferMethod} from '@/types/app'
 import Chat from '@/app/components/chat'
-import { setLocaleOnClient } from '@/i18n/client'
-import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints'
+import {setLocaleOnClient} from '@/i18n/client'
+import useBreakpoints, {MediaType} from '@/hooks/use-breakpoints'
 import Loading from '@/app/components/base/loading'
-import { replaceVarWithValues, userInputsFormToPromptVariables } from '@/utils/prompt'
+import {replaceVarWithValues, userInputsFormToPromptVariables} from '@/utils/prompt'
 import AppUnavailable from '@/app/components/app-unavailable'
-import { API_KEY, APP_ID, APP_INFO, isShowPrompt, promptTemplate } from '@/config'
-import type { Annotation as AnnotationType } from '@/types/log'
-import { addFileInfos, sortAgentSorts } from '@/utils/tools'
+import {API_KEY, APP_ID, APP_INFO, isShowPrompt, promptTemplate} from '@/config'
+import type {Annotation as AnnotationType} from '@/types/log'
+import {addFileInfos, sortAgentSorts} from '@/utils/tools'
 
 const Main: FC = () => {
-  const { t } = useTranslation()
+  const {t} = useTranslation()
   const media = useBreakpoints()
   const isMobile = media === MediaType.mobile
   const hasSetAppConfig = APP_ID && API_KEY
@@ -37,7 +44,7 @@ const Main: FC = () => {
   const [promptConfig, setPromptConfig] = useState<PromptConfig | null>(null)
   const [inited, setInited] = useState<boolean>(false)
   // in mobile, show sidebar by click button
-  const [isShowSidebar, { setTrue: showSidebar, setFalse: hideSidebar }] = useBoolean(false)
+  const [isShowSidebar, {setTrue: showSidebar, setFalse: hideSidebar}] = useBoolean(false)
   const [visionConfig, setVisionConfig] = useState<VisionSettings | undefined>({
     enabled: false,
     number_limits: 2,
@@ -79,7 +86,7 @@ const Main: FC = () => {
   } = useConversation()
 
   const [conversationIdChangeBecauseOfNew, setConversationIdChangeBecauseOfNew, getConversationIdChangeBecauseOfNew] = useGetState(false)
-  const [isChatStarted, { setTrue: setChatStarted, setFalse: setChatNotStarted }] = useBoolean(false)
+  const [isChatStarted, {setTrue: setChatStarted, setFalse: setChatNotStarted}] = useBoolean(false)
   const handleStartChat = (inputs: Record<string, any>) => {
     createNewChat()
     setConversationIdChangeBecauseOfNew(true)
@@ -114,8 +121,7 @@ const Main: FC = () => {
         name: item?.name || '',
         introduction: notSyncToStateIntroduction,
       })
-    }
-    else {
+    } else {
       notSyncToStateInputs = newConversationInputs
       setCurrInputs(notSyncToStateInputs)
     }
@@ -123,7 +129,7 @@ const Main: FC = () => {
     // update chat list of current conversation
     if (!isNewConversation && !conversationIdChangeBecauseOfNew && !isResponsing) {
       fetchChatList(currConversationId).then((res: any) => {
-        const { data } = res
+        const {data} = res
         const newChatList: IChatItem[] = generateNewChatListWithOpenstatement(notSyncToStateIntroduction, notSyncToStateInputs)
 
         data.forEach((item: any) => {
@@ -156,8 +162,7 @@ const Main: FC = () => {
     if (id === '-1') {
       createNewChat()
       setConversationIdChangeBecauseOfNew(true)
-    }
-    else {
+    } else {
       setConversationIdChangeBecauseOfNew(false)
     }
     // trigger handleConversationSwitch
@@ -223,12 +228,12 @@ const Main: FC = () => {
         const [conversationData, appParams] = await Promise.all([fetchConversations(), fetchAppParams()])
 
         // handle current conversation id
-        const { data: conversations } = conversationData as { data: ConversationItem[] }
+        const {data: conversations} = conversationData as { data: ConversationItem[] }
         const _conversationId = getConversationIdFromStorage(APP_ID)
         const isNotNewConversation = conversations.some(item => item.id === _conversationId)
 
         // fetch new conversation info
-        const { user_input_form, opening_statement: introduction, file_upload, system_parameters }: any = appParams
+        const {user_input_form, opening_statement: introduction, file_upload, system_parameters}: any = appParams
         setLocaleOnClient(APP_INFO.default_language, true)
         setNewConversationInfo({
           name: t('app.chat.newChatDefaultName'),
@@ -249,12 +254,10 @@ const Main: FC = () => {
           setCurrConversationId(_conversationId, APP_ID, false)
 
         setInited(true)
-      }
-      catch (e: any) {
+      } catch (e: any) {
         if (e.status === 404) {
           setAppUnavailable(true)
-        }
-        else {
+        } else {
           setIsUnknwonReason(true)
           setAppUnavailable(true)
         }
@@ -262,11 +265,11 @@ const Main: FC = () => {
     })()
   }, [])
 
-  const [isResponsing, { setTrue: setResponsingTrue, setFalse: setResponsingFalse }] = useBoolean(false)
+  const [isResponsing, {setTrue: setResponsingTrue, setFalse: setResponsingFalse}] = useBoolean(false)
   const [abortController, setAbortController] = useState<AbortController | null>(null)
-  const { notify } = Toast
+  const {notify} = Toast
   const logError = (message: string) => {
-    notify({ type: 'error', message })
+    notify({type: 'error', message})
   }
 
   const checkCanSend = () => {
@@ -295,11 +298,11 @@ const Main: FC = () => {
   const [userQuery, setUserQuery] = useState('')
 
   const updateCurrentQA = ({
-    responseItem,
-    questionId,
-    placeholderAnswerId,
-    questionItem,
-  }: {
+                             responseItem,
+                             questionId,
+                             placeholderAnswerId,
+                             questionItem,
+                           }: {
     responseItem: IChatItem
     questionId: string
     placeholderAnswerId: string
@@ -310,16 +313,16 @@ const Main: FC = () => {
       getChatList().filter(item => item.id !== responseItem.id && item.id !== placeholderAnswerId),
       (draft) => {
         if (!draft.find(item => item.id === questionId))
-          draft.push({ ...questionItem })
+          draft.push({...questionItem})
 
-        draft.push({ ...responseItem })
+        draft.push({...responseItem})
       })
     setChatList(newListWithAnswer)
   }
 
   const handleSend = async (message: string, files?: VisionFile[]) => {
     if (isResponsing) {
-      notify({ type: 'info', message: t('app.errorMessage.waitForResponse') })
+      notify({type: 'info', message: t('app.errorMessage.waitForResponse')})
       return
     }
     const data: Record<string, any> = {
@@ -379,11 +382,14 @@ const Main: FC = () => {
       getAbortController: (abortController) => {
         setAbortController(abortController)
       },
-      onData: (message: string, isFirstMessage: boolean, { conversationId: newConversationId, messageId, taskId }: any) => {
+      onData: (message: string, isFirstMessage: boolean, {
+        conversationId: newConversationId,
+        messageId,
+        taskId
+      }: any) => {
         if (!isAgentMode) {
           responseItem.content = responseItem.content + message
-        }
-        else {
+        } else {
           const lastThought = responseItem.agent_thoughts?.[responseItem.agent_thoughts?.length - 1]
           if (lastThought)
             lastThought.thought = lastThought.thought + message // need immer setAutoFreeze
@@ -414,7 +420,7 @@ const Main: FC = () => {
           return
 
         if (getConversationIdChangeBecauseOfNew()) {
-          const { data: allConversations }: any = await fetchConversations()
+          const {data: allConversations}: any = await fetchConversations()
           const newItem: any = await generationConversationName(allConversations[0].id)
 
           const newAllConversations = produce(allConversations, (draft: any) => {
@@ -431,7 +437,7 @@ const Main: FC = () => {
       onFile(file) {
         const lastThought = responseItem.agent_thoughts?.[responseItem.agent_thoughts?.length - 1]
         if (lastThought)
-          lastThought.message_files = [...(lastThought as any).message_files, { ...file }]
+          lastThought.message_files = [...(lastThought as any).message_files, {...file}]
 
         updateCurrentQA({
           responseItem,
@@ -450,16 +456,14 @@ const Main: FC = () => {
         // responseItem.id = thought.message_id;
         if (response.agent_thoughts.length === 0) {
           response.agent_thoughts.push(thought)
-        }
-        else {
+        } else {
           const lastThought = response.agent_thoughts[response.agent_thoughts.length - 1]
           // thought changed but still the same thought, so update.
           if (lastThought.id === thought.id) {
             thought.thought = lastThought.thought
             thought.message_files = lastThought.message_files
             responseItem.agent_thoughts![response.agent_thoughts.length - 1] = thought
-          }
-          else {
+          } else {
             responseItem.agent_thoughts!.push(thought)
           }
         }
@@ -487,7 +491,7 @@ const Main: FC = () => {
             getChatList().filter(item => item.id !== responseItem.id && item.id !== placeholderAnswerId),
             (draft) => {
               if (!draft.find(item => item.id === questionId))
-                draft.push({ ...questionItem })
+                draft.push({...questionItem})
 
               draft.push({
                 ...responseItem,
@@ -502,9 +506,9 @@ const Main: FC = () => {
           getChatList().filter(item => item.id !== responseItem.id && item.id !== placeholderAnswerId),
           (draft) => {
             if (!draft.find(item => item.id === questionId))
-              draft.push({ ...questionItem })
+              draft.push({...questionItem})
 
-            draft.push({ ...responseItem })
+            draft.push({...responseItem})
           })
         setChatList(newListWithAnswer)
       },
@@ -530,7 +534,7 @@ const Main: FC = () => {
   }
 
   const handleFeedback = async (messageId: string, feedback: Feedbacktype) => {
-    await updateFeedback({ url: `/messages/${messageId}/feedbacks`, body: { rating: feedback.rating } })
+    await updateFeedback({url: `/messages/${messageId}/feedbacks`, body: {rating: feedback.rating}})
     const newChatList = chatList.map((item) => {
       if (item.id === messageId) {
         return {
@@ -541,7 +545,7 @@ const Main: FC = () => {
       return item
     })
     setChatList(newChatList)
-    notify({ type: 'success', message: t('common.api.success') })
+    notify({type: 'success', message: t('common.api.success')})
   }
 
   const renderSidebar = () => {
@@ -558,10 +562,11 @@ const Main: FC = () => {
   }
 
   if (appUnavailable)
-    return <AppUnavailable isUnknwonReason={isUnknwonReason} errMessage={!hasSetAppConfig ? 'Please set APP_ID and API_KEY in config/index.tsx' : ''} />
+    return <AppUnavailable isUnknwonReason={isUnknwonReason}
+                           errMessage={!hasSetAppConfig ? 'Please set APP_ID and API_KEY in config/index.tsx' : ''}/>
 
   if (!APP_ID || !APP_INFO || !promptConfig)
-    return <Loading type='app' />
+    return <Loading type='app'/>
 
   return (
     <div className='bg-gray-100'>
@@ -576,8 +581,8 @@ const Main: FC = () => {
         {!isMobile && renderSidebar()}
         {isMobile && isShowSidebar && (
           <div className='fixed inset-0 z-50'
-            style={{ backgroundColor: 'rgba(35, 56, 118, 0.2)' }}
-            onClick={hideSidebar}
+               style={{backgroundColor: 'rgba(35, 56, 118, 0.2)'}}
+               onClick={hideSidebar}
           >
             <div className='inline-block' onClick={e => e.stopPropagation()}>
               {renderSidebar()}
@@ -600,7 +605,8 @@ const Main: FC = () => {
 
           {
             hasSetInputs && (
-              <div className='relative grow h-[200px] pc:w-[794px] max-w-full mobile:w-full pb-[66px] mx-auto mb-3.5 overflow-hidden'>
+              <div
+                className='relative grow h-[200px] pc:w-[794px] max-w-full mobile:w-full pb-[66px] mx-auto mb-3.5 overflow-hidden'>
                 <div className='h-full overflow-y-auto' ref={chatListDomRef}>
                   <Chat
                     chatList={chatList}

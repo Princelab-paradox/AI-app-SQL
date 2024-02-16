@@ -49,7 +49,7 @@ export function generate(
   if (!rootProps) {
     return React.createElement(
       node.name,
-      { key, ...normalizeAttrs(node.attributes) },
+      {key, ...normalizeAttrs(node.attributes)},
       (node.children || []).map((child, index) => generate(child, `${key}-${node.name}-${index}`)),
     )
   }

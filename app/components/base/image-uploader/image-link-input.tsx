@@ -1,18 +1,18 @@
-import type { FC } from 'react'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import type {FC} from 'react'
+import {useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import Button from '@/app/components/base/button'
-import type { ImageFile } from '@/types/app'
-import { TransferMethod } from '@/types/app'
+import type {ImageFile} from '@/types/app'
+import {TransferMethod} from '@/types/app'
 
 type ImageLinkInputProps = {
   onUpload: (imageFile: ImageFile) => void
 }
 const regex = /^(https?|ftp):\/\//
 const ImageLinkInput: FC<ImageLinkInputProps> = ({
-  onUpload,
-}) => {
-  const { t } = useTranslation()
+                                                   onUpload,
+                                                 }) => {
+  const {t} = useTranslation()
   const [imageLink, setImageLink] = useState('')
 
   const handleClick = () => {

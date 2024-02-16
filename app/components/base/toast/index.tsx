@@ -1,15 +1,10 @@
 'use client'
 import classNames from 'classnames'
-import type { ReactNode } from 'react'
-import React, { useEffect, useState } from 'react'
-import { createRoot } from 'react-dom/client'
-import {
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
-  XCircleIcon,
-} from '@heroicons/react/20/solid'
-import { createContext, useContext } from 'use-context-selector'
+import type {ReactNode} from 'react'
+import React, {useEffect, useState} from 'react'
+import {createRoot} from 'react-dom/client'
+import {CheckCircleIcon, ExclamationTriangleIcon, InformationCircleIcon, XCircleIcon,} from '@heroicons/react/20/solid'
+import {createContext, useContext} from 'use-context-selector'
 
 export type IToastProps = {
   type?: 'success' | 'error' | 'warning' | 'info'
@@ -27,11 +22,11 @@ export const ToastContext = createContext<IToastContext>({} as IToastContext)
 export const useToastContext = () => useContext(ToastContext)
 
 const Toast = ({
-  type = 'info',
-  duration,
-  message,
-  children,
-}: IToastProps) => {
+                 type = 'info',
+                 duration,
+                 message,
+                 children,
+               }: IToastProps) => {
   // sometimes message is react node array. Not handle it.
   if (typeof message !== 'string')
     return null
@@ -47,10 +42,10 @@ const Toast = ({
   )}>
     <div className="flex">
       <div className="flex-shrink-0">
-        {type === 'success' && <CheckCircleIcon className="w-5 h-5 text-green-400" aria-hidden="true" />}
-        {type === 'error' && <XCircleIcon className="w-5 h-5 text-red-400" aria-hidden="true" />}
-        {type === 'warning' && <ExclamationTriangleIcon className="w-5 h-5 text-yellow-400" aria-hidden="true" />}
-        {type === 'info' && <InformationCircleIcon className="w-5 h-5 text-blue-400" aria-hidden="true" />}
+        {type === 'success' && <CheckCircleIcon className="w-5 h-5 text-green-400" aria-hidden="true"/>}
+        {type === 'error' && <XCircleIcon className="w-5 h-5 text-red-400" aria-hidden="true"/>}
+        {type === 'warning' && <ExclamationTriangleIcon className="w-5 h-5 text-yellow-400" aria-hidden="true"/>}
+        {type === 'info' && <InformationCircleIcon className="w-5 h-5 text-blue-400" aria-hidden="true"/>}
       </div>
       <div className="ml-3">
         <h3 className={
@@ -80,8 +75,8 @@ const Toast = ({
 }
 
 export const ToastProvider = ({
-  children,
-}: {
+                                children,
+                              }: {
   children: ReactNode
 }) => {
   const placeholder: IToastProps = {
@@ -113,15 +108,15 @@ export const ToastProvider = ({
 }
 
 Toast.notify = ({
-  type,
-  message,
-  duration,
-}: Pick<IToastProps, 'type' | 'message' | 'duration'>) => {
+                  type,
+                  message,
+                  duration,
+                }: Pick<IToastProps, 'type' | 'message' | 'duration'>) => {
   if (typeof window === 'object') {
     const holder = document.createElement('div')
     const root = createRoot(holder)
 
-    root.render(<Toast type={type} message={message} duration={duration} />)
+    root.render(<Toast type={type} message={message} duration={duration}/>)
     document.body.appendChild(holder)
     setTimeout(() => {
       if (holder)

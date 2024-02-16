@@ -1,13 +1,13 @@
-import type { FC } from 'react'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import type {FC} from 'react'
+import {useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import Loading02 from '@/app/components/base/icons/line/loading-02'
 import XClose from '@/app/components/base/icons/line/x-close'
 import RefreshCcw01 from '@/app/components/base/icons/line/refresh-ccw-01'
 import AlertTriangle from '@/app/components/base/icons/solid/alert-triangle'
 import TooltipPlus from '@/app/components/base/tooltip-plus'
-import type { ImageFile } from '@/types/app'
-import { TransferMethod } from '@/types/app'
+import type {ImageFile} from '@/types/app'
+import {TransferMethod} from '@/types/app'
 import ImagePreview from '@/app/components/base/image-uploader/image-preview'
 
 type ImageListProps = {
@@ -20,14 +20,14 @@ type ImageListProps = {
 }
 
 const ImageList: FC<ImageListProps> = ({
-  list,
-  readonly,
-  onRemove,
-  onReUpload,
-  onImageLinkLoadSuccess,
-  onImageLinkLoadError,
-}) => {
-  const { t } = useTranslation()
+                                         list,
+                                         readonly,
+                                         onRemove,
+                                         onReUpload,
+                                         onImageLinkLoadSuccess,
+                                         onImageLinkLoadError,
+                                       }) => {
+  const {t} = useTranslation()
   const [imagePreviewUrl, setImagePreviewUrl] = useState('')
 
   const handleImageLinkLoadSuccess = (item: ImageFile) => {
@@ -52,17 +52,18 @@ const ImageList: FC<ImageListProps> = ({
                 <>
                   <div
                     className='absolute inset-0 flex items-center justify-center z-[1] bg-black/30'
-                    style={{ left: item.progress > -1 ? `${item.progress}%` : 0 }}
+                    style={{left: item.progress > -1 ? `${item.progress}%` : 0}}
                   >
                     {
                       item.progress === -1 && (
-                        <RefreshCcw01 className='w-5 h-5 text-white' onClick={() => onReUpload && onReUpload(item._id)} />
+                        <RefreshCcw01 className='w-5 h-5 text-white' onClick={() => onReUpload && onReUpload(item._id)}/>
                       )
                     }
                   </div>
                   {
                     item.progress > -1 && (
-                      <span className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-sm text-white mix-blend-lighten z-[1]'>{item.progress}%</span>
+                      <span
+                        className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-sm text-white mix-blend-lighten z-[1]'>{item.progress}%</span>
                     )
                   }
                 </>
@@ -76,13 +77,13 @@ const ImageList: FC<ImageListProps> = ({
                 `}>
                   {
                     item.progress > -1 && (
-                      <Loading02 className='animate-spin w-5 h-5 text-white' />
+                      <Loading02 className='animate-spin w-5 h-5 text-white'/>
                     )
                   }
                   {
                     item.progress === -1 && (
                       <TooltipPlus popupContent={t('common.imageUploader.pasteImageLinkInvalid')}>
-                        <AlertTriangle className='w-4 h-4 text-[#DC6803]' />
+                        <AlertTriangle className='w-4 h-4 text-[#DC6803]'/>
                       </TooltipPlus>
                     )
                   }
@@ -108,7 +109,7 @@ const ImageList: FC<ImageListProps> = ({
                   `}
                   onClick={() => onRemove && onRemove(item._id)}
                 >
-                  <XClose className='w-3 h-3 text-gray-500' />
+                  <XClose className='w-3 h-3 text-gray-500'/>
                 </div>
               )
             }

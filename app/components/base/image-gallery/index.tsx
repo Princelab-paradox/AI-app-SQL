@@ -1,6 +1,6 @@
 'use client'
-import type { FC } from 'react'
-import React, { useState } from 'react'
+import type {FC} from 'react'
+import React, {useState} from 'react'
 import cn from 'classnames'
 import s from './style.module.css'
 import ImagePreview from '@/app/components/base/image-uploader/image-preview'
@@ -28,8 +28,8 @@ const getWidthStyle = (imgNum: number) => {
 }
 
 const ImageGallery: FC<Props> = ({
-  srcs,
-}) => {
+                                   srcs,
+                                 }) => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState('')
 
   const imgNum = srcs.length
@@ -75,7 +75,7 @@ export const ImageGalleryTest = () => {
     <div className='space-y-2'>
       {imgGallerySrcs.map((_, index) => (
         <div key={index} className='p-4 pb-2 rounded-lg bg-[#D1E9FF80]'>
-          <ImageGallery srcs={imgGallerySrcs.slice(0, index + 1)} />
+          <ImageGallery srcs={imgGallerySrcs.slice(0, index + 1)}/>
         </div>
       ))}
     </div>

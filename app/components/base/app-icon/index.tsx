@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import type {FC} from 'react'
 import classNames from 'classnames'
 import style from './style.module.css'
 
@@ -11,11 +11,11 @@ export type AppIconProps = {
 }
 
 const AppIcon: FC<AppIconProps> = ({
-  size = 'medium',
-  rounded = false,
-  background,
-  className,
-}) => {
+                                     size = 'medium',
+                                     rounded = false,
+                                     background,
+                                     className,
+                                   }) => {
   return (
     <span
       className={classNames(

@@ -1,9 +1,10 @@
 'use client'
 import React from 'react'
+import type {OffsetOptions, Placement} from '@floating-ui/react'
 import {
-  FloatingPortal,
   autoUpdate,
   flip,
+  FloatingPortal,
   offset,
   shift,
   useDismiss,
@@ -14,8 +15,6 @@ import {
   useMergeRefs,
   useRole,
 } from '@floating-ui/react'
-
-import type { OffsetOptions, Placement } from '@floating-ui/react'
 
 type PortalToFollowElemOptions = {
   /*
@@ -30,11 +29,11 @@ type PortalToFollowElemOptions = {
 }
 
 export function usePortalToFollowElem({
-  placement = 'bottom',
-  open,
-  offset: offsetValue = 0,
-  onOpenChange: setControlledOpen,
-}: PortalToFollowElemOptions = {}) {
+                                        placement = 'bottom',
+                                        open,
+                                        offset: offsetValue = 0,
+                                        onOpenChange: setControlledOpen,
+                                      }: PortalToFollowElemOptions = {}) {
   const setOpen = setControlledOpen
 
   const data = useFloating({
@@ -49,7 +48,7 @@ export function usePortalToFollowElem({
         fallbackAxisSideDirection: 'start',
         padding: 5,
       }),
-      shift({ padding: 5 }),
+      shift({padding: 5}),
     ],
   })
 
@@ -63,7 +62,7 @@ export function usePortalToFollowElem({
     enabled: open == null,
   })
   const dismiss = useDismiss(context)
-  const role = useRole(context, { role: 'tooltip' })
+  const role = useRole(context, {role: 'tooltip'})
 
   const interactions = useInteractions([hover, focus, dismiss, role])
 
@@ -92,9 +91,9 @@ export function usePortalToFollowElemContext() {
 }
 
 export function PortalToFollowElem({
-  children,
-  ...options
-}: { children: React.ReactNode } & PortalToFollowElemOptions) {
+                                     children,
+                                     ...options
+                                   }: { children: React.ReactNode } & PortalToFollowElemOptions) {
   // This can accept any props as options, e.g. `placement`,
   // or other positioning options.
   const tooltip = usePortalToFollowElem(options)
@@ -106,9 +105,9 @@ export function PortalToFollowElem({
 }
 
 export const PortalToFollowElemTrigger = React.forwardRef<
-HTMLElement,
-React.HTMLProps<HTMLElement> & { asChild?: boolean }
->(({ children, asChild = false, ...props }, propRef) => {
+  HTMLElement,
+  React.HTMLProps<HTMLElement> & { asChild?: boolean }
+>(({children, asChild = false, ...props}, propRef) => {
   const context = usePortalToFollowElemContext()
   const childrenRef = (children as any).ref
   const ref = useMergeRefs([context.refs.setReference, propRef, childrenRef])
@@ -141,9 +140,9 @@ React.HTMLProps<HTMLElement> & { asChild?: boolean }
 PortalToFollowElemTrigger.displayName = 'PortalToFollowElemTrigger'
 
 export const PortalToFollowElemContent = React.forwardRef<
-HTMLDivElement,
-React.HTMLProps<HTMLDivElement>
->(({ style, ...props }, propRef) => {
+  HTMLDivElement,
+  React.HTMLProps<HTMLDivElement>
+>(({style, ...props}, propRef) => {
   const context = usePortalToFollowElemContext()
   const ref = useMergeRefs([context.refs.setFloating, propRef])
 

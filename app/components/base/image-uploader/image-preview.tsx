@@ -1,5 +1,5 @@
-import type { FC } from 'react'
-import { createPortal } from 'react-dom'
+import type {FC} from 'react'
+import {createPortal} from 'react-dom'
 import XClose from '@/app/components/base/icons/line/x-close'
 
 type ImagePreviewProps = {
@@ -7,11 +7,12 @@ type ImagePreviewProps = {
   onCancel: () => void
 }
 const ImagePreview: FC<ImagePreviewProps> = ({
-  url,
-  onCancel,
-}) => {
+                                               url,
+                                               onCancel,
+                                             }) => {
   return createPortal(
-    <div className='fixed inset-0 p-8 flex items-center justify-center bg-black/80 z-[1000]' onClick={e => e.stopPropagation()}>
+    <div className='fixed inset-0 p-8 flex items-center justify-center bg-black/80 z-[1000]'
+         onClick={e => e.stopPropagation()}>
       <img
         alt='preview image'
         src={url}
@@ -21,7 +22,7 @@ const ImagePreview: FC<ImagePreviewProps> = ({
         className='absolute top-6 right-6 flex items-center justify-center w-8 h-8 bg-white/[0.08] rounded-lg backdrop-blur-[2px] cursor-pointer'
         onClick={onCancel}
       >
-        <XClose className='w-4 h-4 text-white' />
+        <XClose className='w-4 h-4 text-white'/>
       </div>
     </div>,
     document.body,

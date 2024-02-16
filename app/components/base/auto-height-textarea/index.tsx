@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef } from 'react'
+import {forwardRef, useEffect, useRef} from 'react'
 import cn from 'classnames'
 
 type IProps = {
@@ -16,7 +16,18 @@ type IProps = {
 
 const AutoHeightTextarea = forwardRef(
   (
-    { value, onChange, placeholder, className, minHeight = 36, maxHeight = 96, autoFocus, controlFocus, onKeyDown, onKeyUp }: IProps,
+    {
+      value,
+      onChange,
+      placeholder,
+      className,
+      minHeight = 36,
+      maxHeight = 96,
+      autoFocus,
+      controlFocus,
+      onKeyDown,
+      onKeyUp
+    }: IProps,
     outerRef: any,
   ) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -53,7 +64,8 @@ const AutoHeightTextarea = forwardRef(
 
     return (
       <div className='relative'>
-        <div className={cn(className, 'invisible whitespace-pre-wrap break-all  overflow-y-auto')} style={{ minHeight, maxHeight }}>
+        <div className={cn(className, 'invisible whitespace-pre-wrap break-all  overflow-y-auto')}
+             style={{minHeight, maxHeight}}>
           {!value ? placeholder : value.replace(/\n$/, '\n ')}
         </div>
         <textarea
