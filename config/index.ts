@@ -1,7 +1,7 @@
 import type {AppInfo} from '@/types/app'
 
 export const APP_ID = '4a305df2-ba85-4602-9839-613c01d4641b'
-export const API_KEY = 'app-bSCt4MWWgPBFyGD21UkxKYO4'
+export const API_KEY = 'app-2BEDp9CxStGasnmuluG2LuNY'
 export const API_URL = 'http://139.59.65.135/v1'
 
 export const APP_INFO: AppInfo = {
