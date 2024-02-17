@@ -1,8 +1,9 @@
 import type {AppInfo} from '@/types/app'
 
-export const APP_ID = '4a305df2-ba85-4602-9839-613c01d4641b'
-export const API_KEY = 'app-bSCt4MWWgPBFyGD21UkxKYO4'
-export const API_URL = 'http://139.59.65.135/v1'
+export const APP_ID = 'f5aaaf74-1352-46d6-b18d-b4c4ffb35bbb' 
+export const API_KEY = 'app-JZ7k0Yj1FLhWm6LXqzraqFc4'
+export const API_URL = 'https://api.dify.ai/v1'
+
 
 export const APP_INFO: AppInfo = {
     title: 'Princelab',
