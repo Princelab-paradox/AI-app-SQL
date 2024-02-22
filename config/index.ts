@@ -6,7 +6,7 @@ export const API_URL = 'https://api.dify.ai/v1'
 
 
 export const APP_INFO: AppInfo = {
-    title: 'Princelab',
+    title: 'SQL creator',
     description: '',
     copyright: '',
     privacy_policy: '',
